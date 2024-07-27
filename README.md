@@ -3,26 +3,7 @@
 ShopEase is an e-commerce application that includes features for promo codes and referrals. This repository contains the backend API for ShopEase.
 
 ## Project Structure
-shopease-backend/ 
-├── config/ 
-│ └── database.js 
-├── models/ 
-│  ├── user.model.js  
-│  ├── promo-code.model.js  
-│  └── referral.model.js 
-├── controllers/ 
-│   ├── user.controller.js 
-│   ├── promo-code.controller.js 
-│   └── referral.controller.js 
-├── routes/ 
-│   └── api.routes.js 
-├── middlewares/ 
-│   └── auth.middleware.js 
-├── .env 
-├── .gitignore 
-├── package.json 
-├── server.js 
-└── README.md
+![Structure](https://github.com/arkaslittlemind/shopease-backend/blob/main/Project%20Structure.png)
 
 ## Prerequisites
 
