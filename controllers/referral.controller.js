@@ -4,19 +4,24 @@ const PromoCode = require('../models/promo-code.model');
 
 exports.createReferral = async (req, res) => {
   try {
+    
     const { referralCode, newUserId } = req.body;
+    
     const referrer = await User.findOne({ referralCode });
+    
 
     if (!referrer) {
       return res.status(404).json({ message: 'Invalid referral code' });
     }
 
+    
     const newReferral = new Referral({
       referrer: referrer._id,
       referred: newUserId
     });
 
     await newReferral.save();
+    
     res.status(201).json(newReferral);
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -18,8 +18,8 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     
-    // console.log('User found:', user); // Debugging line
-    // console.log('User methods:', Object.keys(user.__proto__)); // Debugging line
+    // 
+    // 
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
