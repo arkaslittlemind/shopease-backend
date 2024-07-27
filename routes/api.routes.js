@@ -17,4 +17,6 @@ router.post('/promo-codes/apply', authMiddleware, promoCodeController.applyPromo
 router.post('/referrals', authMiddleware, referralController.createReferral);
 router.post('/referrals/:referralId/redeem', authMiddleware, referralController.redeemReferral);
 
+
+
 module.exports = router;
