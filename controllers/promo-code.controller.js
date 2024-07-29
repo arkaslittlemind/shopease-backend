@@ -49,8 +49,7 @@ exports.getAvailablePromoCodes = async (req, res) => {
     let query = {
       isActive: true,
       validFrom: { $lte: currentDate },
-      validUntil: { $gte: currentDate },
-      usageCount: { $lt: '$usageLimit' }
+      validUntil: { $gte: currentDate }
     };
 
     if (discountType) {
