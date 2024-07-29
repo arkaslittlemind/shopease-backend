@@ -20,4 +20,7 @@ router.post('/referrals/:referralId/redeem', authMiddleware, referralController.
 // Route to fetch available promo codes
 router.get('/promo-codes/available', authMiddleware, promoCodeController.getAvailablePromoCodes);
 
+// Route to fetch user's referrals status
+router.get('/referrals/status', authMiddleware, referralController.getReferralStatus);
+
 module.exports = router;

@@ -57,3 +57,31 @@ exports.redeemReferral = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+
+exports.getReferralStatus = async (req, res) => {
+  try {
+    const userId = req.userData.userId; // Assuming you set this in your auth middleware
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const referrals = await Referral.find({ referrer: userId })
+      .select('referred status rewardClaimed createdAt')
+      .populate('referred', 'email') // Assuming you want to show the email of the referred user
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await Referral.countDocuments({ referrer: userId });
+
+    res.status(200).json({
+      referrals: referrals,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      totalReferrals: total
+    });
+  } catch (error) {
+    console.error('Error fetching referral status:', error);
+    res.status(500).json({ message: 'Error fetching referral status' });
+  }
+};
