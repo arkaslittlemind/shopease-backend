@@ -38,3 +38,40 @@ exports.applyPromoCode = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+exports.getAvailablePromoCodes = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const discountType = req.query.discountType;
+
+    let query = {
+      isActive: true,
+      validFrom: { $lte: currentDate },
+      validUntil: { $gte: currentDate },
+      usageCount: { $lt: '$usageLimit' }
+    };
+
+    if (discountType) {
+      query.discountType = discountType;
+    }
+
+    const availablePromoCodes = await PromoCode.find(query)
+      .select('code discountType discountAmount validUntil')
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await PromoCode.countDocuments(query);
+
+    res.status(200).json({
+      promoCodes: availablePromoCodes,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      totalPromoCodes: total
+    });
+  } catch (error) {
+    console.error('Error fetching available promo codes:', error);
+    res.status(500).json({ message: 'Error fetching available promo codes' });
+  }
+};
